@@ -21,7 +21,7 @@ const SignInPage = () => {
   // }); //client side
 
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/";
+  const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/dashboard";
 
   // useEffect(() => {
   //   if (session) {
@@ -34,7 +34,7 @@ const SignInPage = () => {
     const res = await signIn("credentials", {
       email: userInfo.email,
       password: userInfo.password,
-      callbackUrl,
+      callbackUrl: "/dashboard",
     });
 
     if (res) {
