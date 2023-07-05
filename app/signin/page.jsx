@@ -16,18 +16,18 @@ const SignInPage = () => {
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
 
   //only come to this page if user if unauthenticated
-  const { data: session } = useSession({
-    required: false,
-  }); //client side
+  // const { data: session } = useSession({
+  //   required: false,
+  // }); //client side
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/";
 
-  useEffect(() => {
-    if (session) {
-      redirect("/dashboard");
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     redirect("/dashboard");
+  //   }
+  // }, [session]);
 
   const handleSubmit = async () => {
     const toastId = toast.loading("Signing in...");
