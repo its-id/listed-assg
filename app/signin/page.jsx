@@ -5,11 +5,8 @@ import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
 import { useSession } from "next-auth/react";
-
 import { useSearchParams } from "next/navigation";
-
 import { signIn } from "next-auth/react";
 
 import appleIcon from "../../public/apple.svg";
@@ -21,9 +18,6 @@ const SignInPage = () => {
   //only come to this page if user if unauthenticated
   const { data: session } = useSession({
     required: false,
-    onUnauthenticated() {
-      return;
-    },
   }); //client side
 
   const searchParams = useSearchParams();
