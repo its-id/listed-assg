@@ -1,34 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { useSession } from "next-auth/react";
+
 import { useSearchParams } from "next/navigation";
 
 import { signIn } from "next-auth/react";
 
-import GoogleSignInButton from "../components/GoogleSignInButton";
 import appleIcon from "../../public/apple.svg";
+import googleIcon from "../../public/google.svg";
 
 const SignInPage = () => {
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+
+  //only come to this page if user if unauthenticated
+  const { data: session } = useSession({
+    required: false,
+    onUnauthenticated() {
+      return;
+    },
+  }); //client side
+
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/dashboard";
 
+  useEffect(() => {
+    if (session) {
+      redirect("/dashboard");
+    }
+  }, [session]);
+
   const handleSubmit = async () => {
+    const toastId = toast.loading("Signing in...");
     const res = await signIn("credentials", {
       email: userInfo.email,
       password: userInfo.password,
       callbackUrl,
     });
 
-    console.log("res", res);
+    if (res) {
+      if (res.status === 200) {
+        toast.success("Logged in successfully!", {
+          id: toastId,
+        });
+      } else if (res.status === 401) {
+        toast.error("Invalid credentials!", {
+          id: toastId,
+        });
+      }
+    }
   };
 
   return (
     <div className="min-h-full flex">
       <div className="hidden md:flex justify-center items-center w-[40%] h-100vh bg-black">
-        <p className="font-montserrat tracking-wide text-5xl font-bold text-white inline-block">Board.</p>
+        <p className="montserrat tracking-wide text-5xl font-bold text-white inline-block">Board.</p>
       </div>
       <div className="w-full md:w-[60%] flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-[#F5F5F5]">
         <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -39,7 +70,13 @@ const SignInPage = () => {
 
           <div className="mt-8">
             <div className="mt-1 grid grid-cols-2 gap-3">
-              <GoogleSignInButton />
+              <button
+                className="w-full flex justify-center gap-2 items-center border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                onClick={() => signIn("google", { callbackUrl })}
+              >
+                <Image src={googleIcon} alt="Google Icon" />
+                <span className="text-xs md:text-sm">Sign in with Google</span>
+              </button>
               <button className="w-full gap-2 items-center flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <Image src={appleIcon} alt="Sign in with Apple" />
                 <span className="text-xs md:text-sm">Sign in with Apple</span>
@@ -110,37 +147,8 @@ const SignInPage = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
-
-    // <section className="flex min-h-full overflow-hidden pt-16 sm:py-28">
-    //   <div className="mx-auto flex w-full max-w-2xl flex-col px-4 sm:px-6">
-    //     <div className="relative mt-12 sm:mt-16">
-    //       <h1 className="text-center text-2xl font-medium tracking-tight text-gray-900">Sign in to your account</h1>
-    //     </div>
-    //     <div className="sm:rounded-5xl -mx-4 mt-10 flex-auto bg-white px-4 py-10 shadow-2xl shadow-gray-900/10 sm:mx-0 sm:flex-none sm:p-24">
-    //       <form>
-    //         <div className="space-y-2">
-    //           <TextField
-    //             id="email"
-    //             name="email"
-    //             type="email"
-    //             label="Sign in with your email"
-    //             placeholder="hello@me.com"
-    //             autoComplete="email"
-    //             required
-    //           />
-    //         </div>
-    //         <Button type="submit" variant="outline" color="gray" className="mt-3 w-full">
-    //           Continue with email
-    //         </Button>
-    //       </form>
-    //       <div className="mx-auto my-10 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
-    //         or
-    //       </div>
-    //       <GoogleSignInButton />
-    //     </div>
-    //   </div>
-    // </section>
   );
 };
 

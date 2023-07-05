@@ -1,6 +1,8 @@
 "use client";
 
 import { signOut } from "next-auth/react";
+import toast, { Toaster } from "react-hot-toast";
+
 import Image from "next/image";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
@@ -21,7 +23,7 @@ function classNames(...classes) {
 
 const Navbar = ({ session, setSidebarOpen }) => {
   return (
-    <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 pt-8">
+    <div className="sticky top-0 z-10 flex-shrink-0 flex min-h-16 pt-8 pb-4 bg-[#F5F5F5]">
       <button
         type="button"
         className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
@@ -32,7 +34,7 @@ const Navbar = ({ session, setSidebarOpen }) => {
       </button>
       <div className="flex-1 flex px-4 justify-between">
         <div className="hidden flex-1 px-4 sm:flex items-center">
-          <p className="font-montserrat tracking-wide font-bold text-xl">Dashboard</p>
+          <p className="tracking-wide font-bold text-xl">Dashboard</p>
         </div>
         <div className="flex-1 md:flex-0 flex justify-between md:justify-end items-center md:ml-6 rounded-lg">
           <form className="w-[60%] md:w-1/2 flex rounded-lg" action="#" method="GET">
@@ -98,7 +100,10 @@ const Navbar = ({ session, setSidebarOpen }) => {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => signOut()}
+                        onClick={() => {
+                          signOut();
+                          toast.success("Signed out successfully");
+                        }}
                         className={classNames(active ? "bg-gray-100" : "", "text-left w-full block px-4 py-2 text-sm text-gray-700")}
                       >
                         Sign out
@@ -111,6 +116,7 @@ const Navbar = ({ session, setSidebarOpen }) => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

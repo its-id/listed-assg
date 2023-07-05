@@ -7,8 +7,6 @@ import { redirect } from "next/navigation";
 import Navbar from "../components/Dashboard/Navbar";
 import Sidebar from "../components/Dashboard/Sidebar";
 import Layout from "../components/Dashboard/Main/Layout";
-// import { BellIcon, CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, MenuAlt2Icon, UsersIcon, XIcon } from "@heroicons/react/outline";
-// import { SearchIcon } from "@heroicons/react/solid";
 
 const Dashboard = () => {
   const { data: session } = useSession({
@@ -19,8 +17,6 @@ const Dashboard = () => {
   }); //client side
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  console.log("data", session);
 
   return (
     <div className="bg-[#F5F5F5]">

@@ -4,20 +4,8 @@ import { Fragment } from "react";
 import Image from "next/image";
 import { Dialog, Transition } from "@headlessui/react";
 
-import dashboardIcon from "../../../public/dashbaord/dashboard_icon.svg";
-import transactionsIcon from "../../../public/dashbaord/transaction_icon.svg";
-import scheduleIcon from "../../../public/dashbaord/schedule_icon.svg";
-import userIcon from "../../../public/dashbaord/user_icon.svg";
-import settingsIcon from "../../../public/dashbaord/setting_icon.svg";
+import { sidebarNavigation } from "@/app/utils/data";
 import XIcon from "../../../public/dashbaord/XIcon.svg";
-
-const navigation = [
-  { name: "Dashboard", href: "#", icon: dashboardIcon, current: true },
-  { name: "Transactions", href: "#", icon: transactionsIcon, current: false },
-  { name: "Schedules", href: "#", icon: scheduleIcon, current: false },
-  { name: "Users", href: "#", icon: userIcon, current: false },
-  { name: "Settings", href: "#", icon: settingsIcon, current: false },
-];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -70,11 +58,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </div>
               </Transition.Child>
               <div className="flex-shrink-0 flex items-center px-8">
-                <p className="font-montserrat tracking-wide font-bold text-white text-3xl">Board.</p>
+                <p className="montserrat tracking-wide font-bold text-white text-3xl">Board.</p>
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-8 space-y-1">
-                  {navigation.map((item) => (
+                  {sidebarNavigation.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
@@ -110,11 +98,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <div className="flex-1 flex flex-col min-h-0 px-4 bg-black rounded-3xl justify-between">
           <div className="flex flex-col">
             <div className="flex items-center px-4 w-full md:py-8">
-              <p className="font-montserrat tracking-wide font-bold text-white text-3xl">Board.</p>
+              <p className="tracking-wide font-bold text-white text-3xl">Board.</p>
             </div>
             <div className="flex-1 flex flex-col overflow-y-auto">
               <nav className="flex-1 px-2 py-4 space-y-1">
-                {navigation.map((item) => (
+                {sidebarNavigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
