@@ -1,6 +1,6 @@
 ## Login Details:
 1. Google Login and Normal Signin is working
-2. To Sign in using test user:
+2. To Sign in using test user (Update: Not working in deployment, trying to fix it. Please google login for loggin in):
    email: test@test.com
    password: 123123
 
