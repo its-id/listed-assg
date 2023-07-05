@@ -1,17 +1,22 @@
 "use client";
 
 import { Fragment } from "react";
+import Image from "next/image";
 import { Dialog, Transition } from "@headlessui/react";
 
-import { CalendarIcon, ChartBarIcon, FolderIcon, HomeIcon, InboxIcon, UsersIcon, XIcon } from "@heroicons/react/outline";
+import dashboardIcon from "../../../public/dashbaord/dashboard_icon.svg";
+import transactionsIcon from "../../../public/dashbaord/transaction_icon.svg";
+import scheduleIcon from "../../../public/dashbaord/schedule_icon.svg";
+import userIcon from "../../../public/dashbaord/user_icon.svg";
+import settingsIcon from "../../../public/dashbaord/setting_icon.svg";
+import XIcon from "../../../public/dashbaord/XIcon.svg";
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: InboxIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartBarIcon, current: false },
+  { name: "Dashboard", href: "#", icon: dashboardIcon, current: true },
+  { name: "Transactions", href: "#", icon: transactionsIcon, current: false },
+  { name: "Schedules", href: "#", icon: scheduleIcon, current: false },
+  { name: "Users", href: "#", icon: userIcon, current: false },
+  { name: "Settings", href: "#", icon: settingsIcon, current: false },
 ];
 
 function classNames(...classes) {
@@ -43,7 +48,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800">
+            <div className="relative flex-1 flex flex-col max-w-xs w-full py-8 bg-black">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -60,15 +65,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     onClick={() => setSidebarOpen(false)}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                    <Image src={XIcon} className="h-6 w-6 text-white" aria-hidden="true" alt="XIcon" />
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex-shrink-0 flex items-center px-4">
-                <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow" />
+              <div className="flex-shrink-0 flex items-center px-8">
+                <p className="font-montserrat tracking-wide font-bold text-white text-3xl">Board.</p>
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
-                <nav className="px-2 space-y-1">
+                <nav className="px-8 space-y-1">
                   {navigation.map((item) => (
                     <a
                       key={item.name}
@@ -78,12 +83,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         "group flex items-center px-2 py-2 text-base font-medium rounded-md"
                       )}
                     >
-                      <item.icon
+                      <Image
+                        src={item.icon}
                         className={classNames(
                           item.current ? "text-gray-300" : "text-gray-400 group-hover:text-gray-300",
-                          "mr-4 flex-shrink-0 h-6 w-6"
+                          "mr-4 flex-shrink-0 h-3 w-3"
                         )}
-                        aria-hidden="true"
+                        alt="item-icon"
                       />
                       {item.name}
                     </a>
@@ -99,31 +105,42 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+      <div className="hidden md:flex md:w-56 md:flex-col md:fixed md:left-5 md:top-5 md:bottom-5">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex-1 flex flex-col min-h-0 bg-gray-800">
-          <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900">
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow" />
+        <div className="flex-1 flex flex-col min-h-0 px-4 bg-black rounded-3xl justify-between">
+          <div className="flex flex-col">
+            <div className="flex items-center px-4 w-full md:py-8">
+              <p className="font-montserrat tracking-wide font-bold text-white text-3xl">Board.</p>
+            </div>
+            <div className="flex-1 flex flex-col overflow-y-auto">
+              <nav className="flex-1 px-2 py-4 space-y-1">
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={classNames(
+                      item.current ? "text-white font-medium" : "text-gray-400 hover:text-white",
+                      "group flex items-center px-2 py-2 text-md rounded-md bg-black"
+                    )}
+                  >
+                    <Image
+                      src={item.icon}
+                      className={classNames(item.current ? "text-gray-300" : "text-gray-500 group-hover:text-gray-300", "mr-3 flex-shrink-0")}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </a>
+                ))}
+              </nav>
+            </div>
           </div>
-          <div className="flex-1 flex flex-col overflow-y-auto">
-            <nav className="flex-1 px-2 py-4 space-y-1">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={classNames(
-                    item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                  )}
-                >
-                  <item.icon
-                    className={classNames(item.current ? "text-gray-300" : "text-gray-400 group-hover:text-gray-300", "mr-3 flex-shrink-0 h-6 w-6")}
-                    aria-hidden="true"
-                  />
-                  {item.name}
-                </a>
-              ))}
-            </nav>
+          <div className="flex flex-col text-sm mb-5 px-4">
+            <a href="#" className="flex items-center px-2 mb-2 text-gray-400 hover:text-white">
+              Help
+            </a>
+            <a href="#" className="flex items-center px-2 text-gray-400 hover:text-white">
+              Contact Us
+            </a>
           </div>
         </div>
       </div>
