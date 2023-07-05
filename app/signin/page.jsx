@@ -21,7 +21,7 @@ const SignInPage = () => {
   }); //client side
 
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/dashboard";
+  const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/";
 
   useEffect(() => {
     if (session) {
