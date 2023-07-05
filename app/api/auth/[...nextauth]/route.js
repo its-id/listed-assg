@@ -6,16 +6,10 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Sign in",
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "example@example.com",
-        },
-        password: { label: "Password", type: "password" },
-      },
+      credentials: {},
       authorize(credentials) {
-        if (!credentials || !credentials.email || !credentials.password) return null;
+        const { email, password } = credentials;
+        if (!email || !password) return null;
 
         const user = {
           id: 1,
@@ -23,11 +17,11 @@ export const authOptions = {
           email: "test@test.com",
         };
 
-        if (credentials.email === "test@test.com" && credentials.password === "123123") {
+        if (email === user.email && password === "123123") {
           return user;
         }
 
-        return null;
+        return new Error("invalid credentials");
       },
     }),
     GoogleProvider({

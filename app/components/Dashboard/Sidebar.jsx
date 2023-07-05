@@ -126,7 +126,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <Image
                       src={item.icon}
                       className={classNames(item.current ? "text-gray-300" : "text-gray-500 group-hover:text-gray-300", "mr-3 flex-shrink-0")}
-                      aria-hidden="true"
+                      alt="item-icon"
                     />
                     {item.name}
                   </a>

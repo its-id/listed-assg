@@ -59,7 +59,7 @@ const Navbar = ({ session, setSidebarOpen }) => {
               className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span className="sr-only">View notifications</span>
-              <Image src={bellIcon} />
+              <Image src={bellIcon} alt="bell-icon" />
             </button>
 
             {/* Profile dropdown */}
@@ -81,11 +81,9 @@ const Navbar = ({ session, setSidebarOpen }) => {
               >
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <Menu.Item>
-                    {({ active }) => (
-                      <button disabled className="block px-4 py-2 text-sm text-gray-700">
-                        {session?.user?.name}
-                      </button>
-                    )}
+                    <button disabled className="block px-4 py-2 text-sm text-gray-700 border-b border-gray-300 w-full text-left">
+                      {session?.user?.name}
+                    </button>
                   </Menu.Item>
 
                   {userNavigation.map((item) => (
@@ -99,7 +97,10 @@ const Navbar = ({ session, setSidebarOpen }) => {
                   ))}
                   <Menu.Item>
                     {({ active }) => (
-                      <button onClick={() => signOut()} className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
+                      <button
+                        onClick={() => signOut()}
+                        className={classNames(active ? "bg-gray-100" : "", "text-left w-full block px-4 py-2 text-sm text-gray-700")}
+                      >
                         Sign out
                       </button>
                     )}

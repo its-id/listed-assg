@@ -20,6 +20,8 @@ const Dashboard = () => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  console.log("data", session);
+
   return (
     <div className="bg-[#F5F5F5]">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
