@@ -1,3 +1,11 @@
+## Login Details:
+1. Google Login and Normal Signin is working
+2. To Sign in using test user:
+   email: test@test.com
+   password: 123123
+
+### Created with the help of TailwindCSS
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
