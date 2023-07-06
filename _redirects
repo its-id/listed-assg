@@ -1,3 +1,4 @@
 /*    /signin    200
 /*    /dashboard    200
 /*    /api/auth/*    200
+/signin/*    /*    200

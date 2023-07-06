@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Image from "next/image";
 import Link from "next/link";
-// import { redirect } from "next/navigation";
-// import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
@@ -16,36 +16,47 @@ const SignInPage = () => {
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
 
   //only come to this page if user if unauthenticated
-  // const { data: session } = useSession({
-  //   required: false,
-  // }); //client side
+  const { data: session } = useSession({
+    required: false,
+  }); //client side
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.has("callbackUrl") ? searchParams.get("callbackUrl") : "/dashboard";
 
-  // useEffect(() => {
-  //   if (session) {
-  //     redirect("/dashboard");
-  //   }
-  // }, [session]);
+  useEffect(() => {
+    if (session) {
+      redirect("/dashboard");
+    }
+  }, [session]);
 
-  const handleSubmit = async () => {
-    const toastId = toast.loading("Signing in...");
-    const res = await signIn("credentials", {
-      email: userInfo.email,
-      password: userInfo.password,
-      callbackUrl: "/dashboard",
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (res) {
-      if (res.status === 200) {
-        toast.success("Logged in successfully!", {
-          id: toastId,
-        });
-      } else if (res.status === 401) {
-        toast.error("Invalid credentials!", {
-          id: toastId,
-        });
+    if (!userInfo.email || !userInfo.password) {
+      toast.error("Please enter your email and password!");
+      return;
+    } else if (userInfo.email !== "test@test.com" || userInfo.password !== "123123") {
+      toast.error("Invalid credentials!");
+      return;
+    } else {
+      const toastId = toast.loading("Signing in...");
+      //signin with email and password
+      const res = await signIn("credentials", {
+        email: userInfo.email,
+        password: userInfo.password,
+        redirect: true,
+        callbackUrl,
+      });
+
+      if (res) {
+        if (res.status === 200) {
+          toast.success("Logged in successfully!", {
+            id: toastId,
+          });
+        } else {
+          toast.error("Invalid credentials!");
+          return;
+        }
       }
     }
   };

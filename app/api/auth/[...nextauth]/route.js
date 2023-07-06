@@ -9,20 +9,12 @@ export const authOptions = {
       name: "Sign in",
       credentials: {},
       authorize(credentials) {
-        const { email, password } = credentials;
-        if (!email || !password) return null;
-
         const user = {
           id: 1,
           name: "Test User",
           email: "test@test.com",
         };
-
-        if (email === user.email && password === "123123") {
-          return user;
-        }
-
-        return new Error("invalid credentials");
+        return user;
       },
     }),
     GoogleProvider({
