@@ -4,6 +4,12 @@
    email: test@test.com
    password: 123123
 
+## Screenshots
+
+<img width="1582" alt="1" src="https://github.com/its-id/listed_dashboard/assets/60315832/b0de0fd7-3816-4f23-b905-c58c3d9028b0">
+
+<img width="1582" alt="2" src="https://github.com/its-id/listed_dashboard/assets/60315832/9be71137-8384-428c-b237-2ed4fdd47383">
+
 ### Created with the help of TailwindCSS
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
